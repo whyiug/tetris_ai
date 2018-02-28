@@ -51,8 +51,8 @@ ElTetris.prototype.play = function() {
   if (!last_move.game_over) {
     this.rows_completed += last_move.rows_removed;
   }
-//   console.log(this.board);
-//   console.log(this.rows_completed);
+  console.log(this.board);
+  console.log(this.rows_completed);
 
   return last_move;
 };

@@ -8,8 +8,8 @@ while(true) {
     break;
   }
 
-//   if (counter == 5) {
-//     break;
-//   }
+  if (counter == 15) {
+    break;
+  }
 }
 console.log(eltetris.rows_completed);
