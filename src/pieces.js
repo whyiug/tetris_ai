@@ -30,16 +30,19 @@ var PIECES = new Array();
   X
   X
   */
-PIECES[0] = [
+PIECES[1] = [
     {
       orientation: [1, 1, 1, 1],
       width: 1,
-      height: 4
+      height: 4,
+      index: 0
     },
     {
       orientation: [parse('1111')],
       width: 4,
-      height: 1
+      height: 1,
+      index: 1
+
     }
 ];
 
@@ -51,7 +54,7 @@ PIECES[0] = [
  * OOO    OO    OO     O
  *        O      O
  */
-PIECES[1] = [
+PIECES[2] = [
     {
       orientation: [
           parse('10'),
@@ -60,6 +63,7 @@ PIECES[1] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 3
     }, 
     {
       orientation: [
@@ -68,6 +72,7 @@ PIECES[1] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 2
     },
     {
       orientation: [
@@ -77,6 +82,7 @@ PIECES[1] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 1
     },
     {
       orientation: [
@@ -85,6 +91,7 @@ PIECES[1] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 0
     },
 ];
 
@@ -95,7 +102,7 @@ PIECES[1] = [
  * OO
  * OO
  */
-PIECES[2] = [
+PIECES[0] = [
     {
       orientation: [
           parse('11'),
@@ -103,6 +110,7 @@ PIECES[2] = [
       ],
       width: 2,
       height: 2,
+      index: 0,
     },
 ];
 
@@ -114,7 +122,7 @@ PIECES[2] = [
  * OOO    O       O    O
  *        O           OO
  */
-PIECES[3] = [
+PIECES[4] = [
     {
       orientation: [
           parse('100'),
@@ -122,6 +130,7 @@ PIECES[3] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 1
     },
     {
       orientation: [
@@ -131,6 +140,7 @@ PIECES[3] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 0
     },
     {
       orientation: [
@@ -139,6 +149,7 @@ PIECES[3] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 3
     },
     {
       orientation: [
@@ -148,6 +159,7 @@ PIECES[3] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 2
     },
 ];
 
@@ -159,7 +171,7 @@ PIECES[3] = [
  * OOO     O    O      O
  *         O           OO
  */
-PIECES[4] = [
+PIECES[3] = [
     {
       orientation: [
           parse('111'),
@@ -167,6 +179,7 @@ PIECES[4] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 1
     },
     {
       orientation: [
@@ -176,6 +189,7 @@ PIECES[4] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 0
     },
     {
       orientation: [
@@ -184,6 +198,7 @@ PIECES[4] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 3
     },
     {
       orientation: [
@@ -193,6 +208,7 @@ PIECES[4] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 2
     },
     
 ];
@@ -206,7 +222,7 @@ PIECES[4] = [
  * OO     OO
  *         O
  */
-PIECES[5] = [
+PIECES[6] = [
     {
       orientation: [
           parse('10'),
@@ -215,6 +231,7 @@ PIECES[5] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 1
     },
     {
       orientation: [
@@ -223,6 +240,7 @@ PIECES[5] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 0
     },
 ];
 
@@ -234,7 +252,7 @@ PIECES[5] = [
  *  OO    OO
  *        O
  */
-PIECES[6] = [
+PIECES[5] = [
     {
       orientation: [
           parse('01'),
@@ -243,6 +261,7 @@ PIECES[6] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 1
     },
     {
       orientation: [
@@ -251,6 +270,7 @@ PIECES[6] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 0
     },
 ];
 

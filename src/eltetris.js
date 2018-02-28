@@ -27,32 +27,34 @@
  *  number_of_columns - Number of columns in the tetris game.
  *  number_of_rows - Number of rows in the tetris game.
  */
-function ElTetris(number_of_columns, number_of_rows) {
+function ElTetris(number_of_columns, number_of_rows, board) {
   this.number_of_rows = number_of_rows;
   this.number_of_columns = number_of_columns;
   this.rows_completed = 0;
 
   // The board is represented as an array of integers, one integer for each row.
-  this.board = new Array(number_of_rows);
-  for (var i = 0; i < number_of_rows; i++) {
-    this.board[i] = 0;
-  }
+  this.board = board;
 
   this.FULLROW = Math.pow(2, number_of_columns) - 1;
 }
 
-ElTetris.prototype.play = function() {
-  var piece = this.getRandomPiece();
+ElTetris.prototype.play = function(piece) {
+  piece = PIECES[piece];
+  //console.log(piece);
   var move = this.pickMove(piece);
  
+  return move;
 
   var last_move = this.playMove(this.board, move.orientation, move.column);
 
   if (!last_move.game_over) {
     this.rows_completed += last_move.rows_removed;
   }
-  console.log(this.board);
-  console.log(this.rows_completed);
+//  console.log(this.board);
+//  console.log(piece);
+//  console.log(this.rows_completed);
+//  console.log(move);
+  return move;
 
   return last_move;
 };
@@ -100,9 +102,11 @@ ElTetris.prototype.pickMove = function(piece) {
     }
   }
 
+  // console.log(piece[best_orientation]);
   return {
     'orientation': piece[best_orientation].orientation,
-    'column': best_column
+    'index': piece[best_orientation].index,
+    'column': best_column,
   };
 };
 
@@ -211,9 +215,7 @@ ElTetris.prototype.getRandomPieceIndex = function() {
 ElTetris.prototype.getRandomPiece = function() {
   return PIECES[this.getRandomPieceIndex()];
 };
-ElTetris.prototype.say = function() {
-  console.log('hello');
-};
+
 /*
   Copyright Islam El-Ashi <islam@elashi.me>
 
@@ -246,16 +248,19 @@ var PIECES = new Array();
   X
   X
   */
-PIECES[0] = [
+PIECES[1] = [
     {
       orientation: [1, 1, 1, 1],
       width: 1,
-      height: 4
+      height: 4,
+      index: 0
     },
     {
       orientation: [parse('1111')],
       width: 4,
-      height: 1
+      height: 1,
+      index: 1
+
     }
 ];
 
@@ -267,7 +272,7 @@ PIECES[0] = [
  * OOO    OO    OO     O
  *        O      O
  */
-PIECES[1] = [
+PIECES[2] = [
     {
       orientation: [
           parse('10'),
@@ -276,6 +281,7 @@ PIECES[1] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 3
     }, 
     {
       orientation: [
@@ -284,6 +290,7 @@ PIECES[1] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 2
     },
     {
       orientation: [
@@ -293,6 +300,7 @@ PIECES[1] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 1
     },
     {
       orientation: [
@@ -301,6 +309,7 @@ PIECES[1] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 0
     },
 ];
 
@@ -311,7 +320,7 @@ PIECES[1] = [
  * OO
  * OO
  */
-PIECES[2] = [
+PIECES[0] = [
     {
       orientation: [
           parse('11'),
@@ -319,6 +328,7 @@ PIECES[2] = [
       ],
       width: 2,
       height: 2,
+      index: 0
     },
 ];
 
@@ -330,7 +340,7 @@ PIECES[2] = [
  * OOO    O       O    O
  *        O           OO
  */
-PIECES[3] = [
+PIECES[4] = [
     {
       orientation: [
           parse('100'),
@@ -338,6 +348,7 @@ PIECES[3] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 1
     },
     {
       orientation: [
@@ -347,6 +358,7 @@ PIECES[3] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 0
     },
     {
       orientation: [
@@ -355,6 +367,7 @@ PIECES[3] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 3
     },
     {
       orientation: [
@@ -364,6 +377,7 @@ PIECES[3] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 2
     },
 ];
 
@@ -375,7 +389,7 @@ PIECES[3] = [
  * OOO     O    O      O
  *         O           OO
  */
-PIECES[4] = [
+PIECES[3] = [
     {
       orientation: [
           parse('111'),
@@ -383,6 +397,7 @@ PIECES[4] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 1
     },
     {
       orientation: [
@@ -392,6 +407,7 @@ PIECES[4] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 0
     },
     {
       orientation: [
@@ -400,6 +416,7 @@ PIECES[4] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 3
     },
     {
       orientation: [
@@ -409,6 +426,7 @@ PIECES[4] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 2
     },
     
 ];
@@ -422,7 +440,7 @@ PIECES[4] = [
  * OO     OO
  *         O
  */
-PIECES[5] = [
+PIECES[6] = [
     {
       orientation: [
           parse('10'),
@@ -431,6 +449,7 @@ PIECES[5] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 1
     },
     {
       orientation: [
@@ -439,6 +458,7 @@ PIECES[5] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 0
     },
 ];
 
@@ -450,7 +470,7 @@ PIECES[5] = [
  *  OO    OO
  *        O
  */
-PIECES[6] = [
+PIECES[5] = [
     {
       orientation: [
           parse('01'),
@@ -459,6 +479,7 @@ PIECES[6] = [
       ].reverse(),
       width: 2,
       height: 3,
+      index: 1
     },
     {
       orientation: [
@@ -467,9 +488,13 @@ PIECES[6] = [
       ].reverse(),
       width: 3,
       height: 2,
+      index: 0
     },
 ];
 
+function parse(x) {
+  return parseInt(x.split("").reverse().join(""), 2);
+}
 /*
   Copyright Islam El-Ashi <islam@elashi.me>
 
