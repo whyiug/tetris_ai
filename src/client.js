@@ -5,9 +5,10 @@ var PORT = 12345;            //定义端口号
 //创建一个TCP客户端实例
 var client = net.connect(PORT, HOST, function() {
   console.log('Connected to the server.');
-  client.write('Forrest\r\n');
+  client.write('Iridium\r\n');
 });
 
+var rows = 0;
 //监听数据传输事件
 client.on('data', function(data) {
   var input = data.toString();
@@ -16,37 +17,35 @@ client.on('data', function(data) {
   var current_piece_index = input.substr(400, 1);
   var next_piece_index = input.substr(401, 1);
 
-  var reg=/\d{10}/g;
-  board1=board_str1.match(reg);
-  board1.push(board_str1.substring(board1.join('').length));
-  board2=board_str1.match(reg);
-  board2.push(board_str2.substring(board2.join('').length));
+  var reg = /\d{10}/g;
+  var board_1 = formatParams(board_str1);
+  var board_2 = formatParams(board_str2);
 
-  var board_1 = [];
-  var board_2 = [];
-  board1.map(function(elem, index, arr){
-    if (elem) {
-      this.push(parseInt(elem.split("").reverse().join(""), 2));
-    }
-  }, board_1);
-  board2.map(function(elem, index, arr){
-    if (elem) {
-      this.push(parseInt(elem.split("").reverse().join(""), 2));
-    }
-  }, board_2);
-  console.log(board_1);
-  var ElTetris= require('./eltetris'); 
+  var ElTetris = require('./eltetris'); 
   eltetris = new ElTetris(10, 20, board_1);
   var move = eltetris.play(current_piece_index);
+  rows += eltetris.rows_completed;
+  var rsp = '1' + move.index + move.column + '00\r\n';
   console.log(move);
-  var column = move.column;
-  var rsp = '1' + move.index + column + '00\r\n';
   console.log(rsp);
+  console.log(rows);
   client.write(rsp);
 });
 
 //监听连接关闭事件
 client.on('end', function() {
   console.log('Server disconnected.');
-  console.log();
 });
+
+function formatParams (board_str) {
+  var reg = /\d{10}/g;
+  var board = board_str.match(reg);
+  board.push(board_str.substring(board.join('').length));
+  var board_arr = [];
+  board.map(function(elem, index, arr){
+    if (elem) {
+      this.push(parseInt(elem.split("").reverse().join(""), 2));
+    }
+  }, board_arr);
+  return board_arr;
+}
