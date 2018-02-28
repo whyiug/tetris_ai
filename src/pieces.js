@@ -9,7 +9,7 @@
   (at your option) any later version.
 
   El-Tetris is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  but WITHOUT ANY WARRANTY;without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU Affero General Public License for more details.
 
@@ -110,7 +110,7 @@ PIECES[0] = [
       ],
       width: 2,
       height: 2,
-      index: 0,
+      index: 0
     },
 ];
 
@@ -277,3 +277,4 @@ PIECES[5] = [
 function parse(x) {
   return parseInt(x.split("").reverse().join(""), 2);
 }
+module.exports = PIECES;
