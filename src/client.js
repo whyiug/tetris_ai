@@ -27,9 +27,9 @@ client.on('data', function(data) {
     var move = eltetris.play(current_piece_index);
     rows += eltetris.rows_completed;
     var rsp = '1' + move.index + move.column + '00\r\n';
-    console.log(move);
-    console.log(rsp);
-    console.log(rows);
+//    console.log(move);
+//    console.log(rsp);
+//    console.log(rows);
     client.write(rsp);
 });
 
