@@ -92,7 +92,7 @@ ElTetris.prototype.pickMove = function(piece) {
             var last_move = this.playMove(board, orientation, j);
 
             if (!last_move.game_over) {
-                evaluation = this.evaluateBoard(last_move, board);
+                evaluation = this.evaluateBoard_EL(last_move, board);
 
                 if (evaluation > best_evaluation) {
                     best_evaluation = evaluation;
@@ -125,13 +125,21 @@ ElTetris.prototype.pickMove = function(piece) {
  *   A number indicating how "good" a board is, the higher the number, the
  *   better the board.
  */
-ElTetris.prototype.evaluateBoard = function(last_move, board) {
-    return f.GetLandingHeight(last_move, board) * -4.500158825082766 +
+ElTetris.prototype.evaluateBoard2_PD = function(last_move, board) {
+    return GetLandingHeight(last_move, board) * -1 +
+        last_move.rows_removed * 1 +
+        GetRowTransitions(board, this.number_of_columns) * -1 +
+        GetColumnTransitions(board, this.number_of_columns) * -1 +
+        GetNumberOfHoles(board, this.number_of_columns) * -1 +
+        GetWellSums(board, this.number_of_columns) * -1;
+};
+ElTetris.prototype.evaluateBoard_EL = function(last_move, board) {
+    return GetLandingHeight(last_move, board) * -4.500158825082766 +
         last_move.rows_removed * 3.4181268101392694 +
-        f.GetRowTransitions(board, this.number_of_columns) * -3.2178882868487753 +
-        f.GetColumnTransitions(board, this.number_of_columns) * -9.348695305445199 +
-        f.GetNumberOfHoles(board, this.number_of_columns) * -7.899265427351652 +
-        f.GetWellSums(board, this.number_of_columns) * -3.3855972247263626;
+        GetRowTransitions(board, this.number_of_columns) * -3.2178882868487753 +
+        GetColumnTransitions(board, this.number_of_columns) * -9.348695305445199 +
+        GetNumberOfHoles(board, this.number_of_columns) * -7.899265427351652 +
+        GetWellSums(board, this.number_of_columns) * -3.3855972247263626;
 };
 /**
  * Play the given piece at the specified location.
