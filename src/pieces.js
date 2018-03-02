@@ -32,7 +32,11 @@ var PIECES = new Array();
   */
 PIECES[1] = [
     {
-      orientation: [1, 1, 1, 1],
+      orientation: 
+      [1,
+       1,
+       1,
+       1],
       width: 1,
       height: 4,
       index: 0
@@ -68,7 +72,7 @@ PIECES[2] = [
     {
       orientation: [
           parse('010'),
-          parse('111')
+          parse('111') // [7, 2]
       ].reverse(),
       width: 3,
       height: 2,

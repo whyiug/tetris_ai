@@ -36,23 +36,18 @@ function ElTetris(number_of_columns, number_of_rows, board) {
   this.rows_completed = 0;
 
   // The board is represented as an array of integers, one integer for each row.
-//  this.board = board;
-  this.board = new Array(number_of_rows);
-  for (var i = 0; i < number_of_rows; i++) {
-    this.board[i] = 0;
-  }
+  this.board = board;
 
   this.FULLROW = Math.pow(2, number_of_columns) - 1;
 }
 
 ElTetris.prototype.play = function(piece) {
-  var piece = this.getRandomPiece();
-
-  // piece = PIECES[piece];
+  piece = PIECES[piece];
   //console.log(piece);
   var move = this.pickMove(piece);
 
   var last_move = this.playMove(this.board, move.orientation, move.column);
+  console.log(last_move.landing_height);
 
   if (!last_move.game_over) {
     this.rows_completed += last_move.rows_removed;
@@ -62,6 +57,7 @@ ElTetris.prototype.play = function(piece) {
   //  console.log(this.rows_completed);
   //  console.log(move);
   // return move;
+  return move;
   return last_move;
 };
 
@@ -131,7 +127,7 @@ ElTetris.prototype.pickMove = function(piece) {
  *   A number indicating how "good" a board is, the higher the number, the
  *   better the board.
  */
-ElTetris.prototype.evaluateBoard2_PD = function(last_move, board) {
+ElTetris.prototype.evaluateBoard_PD = function(last_move, board) {
   return f.GetLandingHeight(last_move, board) * -1 +
     last_move.rows_removed * 1 +
     f.GetRowTransitions(board, this.number_of_columns) * -1 +
