@@ -127,7 +127,7 @@ ElTetris.prototype.pickMove = function(piece) {
  *   A number indicating how "good" a board is, the higher the number, the
  *   better the board.
  */
-ElTetris.prototype.evaluateBoard2_PD = function(last_move, board) {
+ElTetris.prototype.evaluateBoard_PD = function(last_move, board) {
   return f.GetLandingHeight(last_move, board) * -1 +
     last_move.rows_removed * 1 +
     f.GetRowTransitions(board, this.number_of_columns) * -1 +
