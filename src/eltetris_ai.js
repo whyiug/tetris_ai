@@ -26,33 +26,40 @@
  *  number_of_columns - Number of columns in the tetris game.
  *  number_of_rows - Number of rows in the tetris game.
  */
-var f = require('./features');
-var PIECES = require('./pieces');
+ var f = require('./features');
+ var PIECES = require('./pieces');
 
-function ElTetris(number_of_columns, number_of_rows, board) {
+ function ElTetris(number_of_columns, number_of_rows, board) {
   this.number_of_rows = number_of_rows;
   this.number_of_columns = number_of_columns;
   this.rows_completed = 0;
 
   // The board is represented as an array of integers, one integer for each row.
 //  this.board = board;
-  this.board = new Array(number_of_rows);
-  for (var i = 0; i < number_of_rows; i++) {
-    this.board[i] = 0;
-  }
+this.board = new Array(number_of_rows);
+for (var i = 0; i < number_of_rows; i++) {
+  this.board[i] = 0;
+}
 
-  this.FULLROW = Math.pow(2, number_of_columns) - 1;
+this.FULLROW = Math.pow(2, number_of_columns) - 1;
 }
 
 ElTetris.prototype.play = function(piece) {
+  console.log('-----当前布局-------');
+  f.PrintBoard(this.board, this.number_of_columns);
+  console.log('------------');
   var piece = this.getRandomPiece();
+  // console.log(piece);
 
   // piece = PIECES[piece];
   //console.log(piece);
   var move = this.pickMove(piece);
-
+  // console.log(move);
+  // f.PrintBestMove(move);
   var last_move = this.playMove(this.board, move.orientation, move.column);
-
+  console.log('-----下落方块-------');
+  f.PrintBoard(last_move.piece, this.number_of_columns);
+  console.log('------------');
   if (!last_move.game_over) {
     this.rows_completed += last_move.rows_removed;
   }
@@ -80,7 +87,7 @@ ElTetris.prototype.play = function(piece) {
  *     * column - The column at which to place the piece.
  */
 
-ElTetris.prototype.pickMove = function(piece) {
+ ElTetris.prototype.pickMove = function(piece) {
   var best_evaluation = -100000;
   var best_orientation = 0;
   var best_column = 0;
@@ -130,21 +137,21 @@ ElTetris.prototype.pickMove = function(piece) {
  *   A number indicating how "good" a board is, the higher the number, the
  *   better the board.
  */
-ElTetris.prototype.evaluateBoard2_PD = function(last_move, board) {
+ ElTetris.prototype.evaluateBoard2_PD = function(last_move, board) {
   return f.GetLandingHeight(last_move, board) * -1 +
-    last_move.rows_removed * 1 +
-    f.GetRowTransitions(board, this.number_of_columns) * -1 +
-    f.GetColumnTransitions(board, this.number_of_columns) * -1 +
-    f.GetNumberOfHoles(board, this.number_of_columns) * -1 +
-    f.GetWellSums(board, this.number_of_columns) * -1;
+  last_move.rows_removed * 1 +
+  f.GetRowTransitions(board, this.number_of_columns) * -1 +
+  f.GetColumnTransitions(board, this.number_of_columns) * -1 +
+  f.GetNumberOfHoles(board, this.number_of_columns) * -1 +
+  f.GetWellSums(board, this.number_of_columns) * -1;
 };
 ElTetris.prototype.evaluateBoard_EL = function(last_move, board) {
   return f.GetLandingHeight(last_move, board) * -4.500158825082766 +
-    last_move.rows_removed * 3.4181268101392694 +
-    f.GetRowTransitions(board, this.number_of_columns) * -3.2178882868487753 +
-    f.GetColumnTransitions(board, this.number_of_columns) * -9.348695305445199 +
-    f.GetNumberOfHoles(board, this.number_of_columns) * -7.899265427351652 +
-    f.GetWellSums(board, this.number_of_columns) * -3.3855972247263626;
+  last_move.rows_removed * 3.4181268101392694 +
+  f.GetRowTransitions(board, this.number_of_columns) * -3.2178882868487753 +
+  f.GetColumnTransitions(board, this.number_of_columns) * -9.348695305445199 +
+  f.GetNumberOfHoles(board, this.number_of_columns) * -7.899265427351652 +
+  f.GetWellSums(board, this.number_of_columns) * -3.3855972247263626;
 };
 /**
  * Play the given piece at the specified location.
@@ -157,7 +164,7 @@ ElTetris.prototype.evaluateBoard_EL = function(last_move, board) {
  * Returns:
  *   True if play succeeded, False if game is over.
  */
-ElTetris.prototype.playMove = function(board, piece, column) {
+ ElTetris.prototype.playMove = function(board, piece, column) {
   piece = this.movePiece(piece, column);
   var placementRow = this.getPlacementRow(board, piece);
   var rowsRemoved = 0;
@@ -196,7 +203,7 @@ ElTetris.prototype.playMove = function(board, piece, column) {
 /**
  * Given a piece, return the row at which it should be placed.
  */
-ElTetris.prototype.getPlacementRow = function(board, piece) {
+ ElTetris.prototype.getPlacementRow = function(board, piece) {
   // Descend from top to find the highest row that will collide
   // with the our piece.
   for (var row = this.number_of_rows - piece.length; row >= 0; row--) {

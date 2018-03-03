@@ -11,8 +11,8 @@ var piece = 1;
 while (true) {
   var last = eltetris.play(piece);
   piece = last.next_piece_index;
-  if (counter == 100000) {
-    console.log('######end########3');
+  if (counter == 20000) {
+    console.log('######end########');
     console.log(eltetris.rows_completed);
     console.log(row1);
     console.log(row2/row1);
