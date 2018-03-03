@@ -108,17 +108,18 @@ ElTetris.prototype.pickMove = function(piece, next_piece) {
             var nlast_move = this.playMove(nboard, norientation, nj); // 第二次变换
             if (!nlast_move.game_over) {
               // nboard 新世界
-              weight = 1;
-              if (nlast_move.landing_height < 17) { // 贪婪
-                if (last_move.rows_removed == 0 && nlast_move.rows_removed == 0) {
-                  weight = 1;
-                } else {
-                  weight = last_move.rows_removed * last_move.rows_removed * last_move.rows_removed + nlast_move.rows_removed * nlast_move.rows_removed * nlast_move.rows_removed;
-                }
-                evaluation = this.evaluateBoard_EL2(nlast_move, nboard, weight);
-              } else { // 保守
-                evaluation = this.evaluateBoard_EL2(nlast_move, nboard, weight);
-              }
+              // weight = 1;
+              // if (nlast_move.landing_height < 17) { // 贪婪
+              //   if (last_move.rows_removed == 0 && nlast_move.rows_removed == 0) {
+              //     weight = 1;
+              //   } else {
+              //     weight = last_move.rows_removed * last_move.rows_removed * last_move.rows_removed + nlast_move.rows_removed * nlast_move.rows_removed * nlast_move.rows_removed;
+              //   }
+              //   evaluation = this.evaluateBoard_EL2(nlast_move, nboard, weight);
+              // } else { // 保守
+              //   evaluation = this.evaluateBoard_EL2(nlast_move, nboard, weight);
+              // }
+              evaluation = this.evaluateBoard_EL(nlast_move, nboard);
               if (evaluation > best_evaluation) {
                 best_evaluation = evaluation;
                 best_orientation = i;
