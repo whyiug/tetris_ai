@@ -1,6 +1,6 @@
 var net = require('net'); //引入网络模块
-var HOST = '192.168.0.141'; //定义服务器地址
-// var HOST = '127.0.0.1'; //定义服务器地址
+// var HOST = '192.168.0.141'; //定义服务器地址
+var HOST = '127.0.0.1'; //定义服务器地址
 var PORT = 12345; //定义端口号
 
 //创建一个TCP客户端实例
@@ -24,8 +24,8 @@ client.on('data', function(data) {
 
     var ElTetris = require('./eltetris');
     eltetris = new ElTetris(10, 20, board_1);
-    var move = eltetris.play(current_piece_index, next_piece_index);
-    rows += eltetris.rows_completed;
+    var move = eltetris.play(current_piece_index);
+    // rows += eltetris.rows_completed;
     var rsp = '1' + move.index + move.column + '00\r\n';
 //    console.log(move);
 //    console.log(rsp);

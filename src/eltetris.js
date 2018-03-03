@@ -45,9 +45,9 @@ ElTetris.prototype.play = function(piece) {
   piece = PIECES[piece];
   //console.log(piece);
   var move = this.pickMove(piece);
-
+return move;
   var last_move = this.playMove(this.board, move.orientation, move.column);
-  console.log(last_move.landing_height);
+  // console.log(last_move.landing_height);
 
   if (!last_move.game_over) {
     this.rows_completed += last_move.rows_removed;
