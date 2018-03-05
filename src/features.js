@@ -35,9 +35,9 @@
       return;
     },
   /**
-     * get the heigth of board
+     * get the height of board
      */
-     PrintBoard: function(board) {
+     GetBoardHeight: function(board) {
       var height = board.lengh;
       for (var i = board.length -1; i >= 0 ; i--) {
         if (board[i] !=0 ) {

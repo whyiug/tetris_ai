@@ -11,15 +11,15 @@ var piece = 1;
 while (true) {
   var last = eltetris.play(piece);
   piece = last.next_piece_index;
-  if (counter == 20000) {
-    console.log('######end########');
-    console.log(eltetris.rows_completed);
-    console.log(row1);
-    console.log(row2/row1);
-    console.log(row3/row1);
-    console.log(row4/row1);
-    break;
-  }
+  // if (counter == 20000) {
+  //   console.log('######end########');
+  //   console.log(eltetris.rows_completed);
+  //   console.log(row1);
+  //   console.log(row2/row1);
+  //   console.log(row3/row1);
+  //   console.log(row4/row1);
+  //   break;
+  // }
   counter ++;
   if (last.game_over) {
     break;
@@ -42,4 +42,5 @@ while (true) {
       break;
   }
   score = eltetris.rows_completed;
+  console.log(score);
 }
