@@ -6,7 +6,11 @@ var PORT = 12345; //定义端口号
 //创建一个TCP客户端实例
 var client = net.connect(PORT, HOST, function() {
     console.log('Connected to the server.');
+<<<<<<< HEAD
     client.write('el2_greed\r\n');
+=======
+    client.write('el2\r\n');
+>>>>>>> ai
 });
 
 var rows = 0;
