@@ -6,7 +6,7 @@ var PORT = 12345; //定义端口号
 //创建一个TCP客户端实例
 var client = net.connect(PORT, HOST, function() {
     console.log('Connected to the server.');
-    client.write('tourist\r\n');
+    client.write('el2\r\n');
 });
 
 var rows = 0;
@@ -24,8 +24,8 @@ client.on('data', function(data) {
 
     var ElTetris = require('./eltetris');
     eltetris = new ElTetris(10, 20, board_1);
-    var move = eltetris.play(current_piece_index);
-    // rows += eltetris.rows_completed;
+    var move = eltetris.play(current_piece_index, next_piece_index);
+    rows += eltetris.rows_completed;
     var rsp = '1' + move.index + move.column + '00\r\n';
 //    console.log(move);
 //    console.log(rsp);

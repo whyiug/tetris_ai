@@ -1,11 +1,11 @@
-var mysql      = require('mysql');
-var connection = mysql.createConnection({     
-  host     : 'localhost',       
-  user     : 'root',              
-  password : '031313',       
-  port: '3306',                   
-  database: 'tetris', 
-}); 
+// var mysql      = require('mysql');
+// var connection = mysql.createConnection({     
+//   host     : 'localhost',       
+//   user     : 'root',              
+//   password : '031313',       
+//   port: '3306',                   
+//   database: 'tetris', 
+// }); 
 connection.connect();
 var ElTetris= require('./eltetris'); 
 eltetris = new ElTetris(10, 20);
@@ -49,5 +49,4 @@ while(true) {
   connection.query(sql, params);
   console.log(eltetris.rows_completed);
 }
-connection.end();
-console.log(eltetris.rows_completed);
+// connection.end();
