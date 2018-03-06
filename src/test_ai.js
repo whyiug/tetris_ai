@@ -1,3 +1,4 @@
+
 // var mysql      = require('mysql');
 // var connection = mysql.createConnection({     
 //   host     : 'localhost',       
@@ -16,9 +17,17 @@ var row3 = 0;
 var row4 = 0;
 var score = 0;
 var counter = 0;
-while(true) {
-  var last = eltetris.play();
+var piece = 1;
+while (true) {
+  var last = eltetris.play(piece);
+  piece = last.next_piece_index;
   if (counter == 20000) {
+    console.log('######end########');
+    console.log(eltetris.rows_completed);
+    console.log(row1);
+    console.log(row2/row1);
+    console.log(row3/row1);
+    console.log(row4/row1);
     break;
   }
   counter ++;
@@ -43,10 +52,5 @@ while(true) {
       break;
   }
   score = eltetris.rows_completed;
-
-  var sql = "insert into pd_ai_1 (row0, row1, row2, row3, row4, score, counters)values(?, ?, ?, ?, ?, ?, ?)";
-  var params = [row0, row1, row2, row3, row4, score, counter];
-  connection.query(sql, params);
-  console.log(eltetris.rows_completed);
 }
 // connection.end();

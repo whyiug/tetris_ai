@@ -46,9 +46,6 @@ function ElTetris(number_of_columns, number_of_rows, board) {
 }
 
 ElTetris.prototype.play = function(piece) {
-  console.log('-----当前布局-------');
-  f.PrintBoard(this.board, this.number_of_columns);
-  console.log('------------');
   piece = PIECES[piece];
   var next_piece_index = this.getRandomPieceIndex()
   var next_piece= PIECES[next_piece_index];
@@ -57,9 +54,7 @@ ElTetris.prototype.play = function(piece) {
   var move = this.pickMove(piece, next_piece);
 
   var last_move = this.playMove(this.board, move.orientation, move.column);
-  console.log('-----下落方块-------');
-  f.PrintBoard(last_move.piece, this.number_of_columns);
-  console.log('------------');
+
   if (!last_move.game_over) {
     this.rows_completed += last_move.rows_removed;
   }
