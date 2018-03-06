@@ -36,23 +36,25 @@ function ElTetris(number_of_columns, number_of_rows, board) {
   this.rows_completed = 0;
 
   // The board is represented as an array of integers, one integer for each row.
-  //  this.board = board;
-  this.board = board;
+   this.board = board;
 
   this.FULLROW = Math.pow(2, number_of_columns) - 1;
 }
 
 ElTetris.prototype.play = function(piece, next_piece) {
-  piece = PIECES[piece];
-  next_piece = PIECES[next_piece];
-  // var next_piece_index = this.getRandomPieceIndex()
-  // var next_piece= PIECES[next_piece_index];
+  console.log('-----当前布局-------');
+  f.PrintBoard(this.board, this.number_of_columns);
+  console.log('------------');
+  var piece = PIECES[piece];
+  var next_piece= PIECES[next_piece];
 
   //console.log(piece);
   var move = this.pickMove(piece, next_piece);
-return move;
-  var last_move = this.playMove(this.board, move.orientation, move.column);
 
+  var last_move = this.playMove(this.board, move.orientation, move.column);
+  console.log('-----下落方块-------');
+  f.PrintBoard(last_move.piece, this.number_of_columns);
+  console.log('------------');
   if (!last_move.game_over) {
     this.rows_completed += last_move.rows_removed;
   }
@@ -62,7 +64,7 @@ return move;
   //  console.log(move);
   // return move;
 
-  // last_move.next_piece_index = next_piece_index;
+  last_move.next_piece_index = next_piece_index;
   return last_move;
 };
 
@@ -108,18 +110,17 @@ ElTetris.prototype.pickMove = function(piece, next_piece) {
             var nlast_move = this.playMove(nboard, norientation, nj); // 第二次变换
             if (!nlast_move.game_over) {
               // nboard 新世界
-              // weight = 1;
-              // if (nlast_move.landing_height < 17) { // 贪婪
-              //   if (last_move.rows_removed == 0 && nlast_move.rows_removed == 0) {
-              //     weight = 1;
-              //   } else {
-              //     weight = last_move.rows_removed * last_move.rows_removed * last_move.rows_removed + nlast_move.rows_removed * nlast_move.rows_removed * nlast_move.rows_removed;
-              //   }
-              //   evaluation = this.evaluateBoard_EL2(nlast_move, nboard, weight);
-              // } else { // 保守
-              //   evaluation = this.evaluateBoard_EL2(nlast_move, nboard, weight);
-              // }
-              evaluation = this.evaluateBoard_EL(nlast_move, nboard);
+              weight = 1;
+              if (nlast_move.landing_height < 17) { // 贪婪
+                if (last_move.rows_removed == 0 && nlast_move.rows_removed == 0) {
+                  weight = 1;
+                } else {
+                  weight = last_move.rows_removed * last_move.rows_removed * last_move.rows_removed + nlast_move.rows_removed * nlast_move.rows_removed * nlast_move.rows_removed;
+                }
+                evaluation = this.evaluateBoard_EL2(nlast_move, nboard, weight);
+              } else { // 保守
+                evaluation = this.evaluateBoard_EL2(nlast_move, nboard, weight);
+              }
               if (evaluation > best_evaluation) {
                 best_evaluation = evaluation;
                 best_orientation = i;
