@@ -120,18 +120,7 @@ ElTetris.prototype.pickMove = function(piece, next_piece) {
             var nboard = board.slice(); // 复制第一次变换后的新看板
             var nlast_move = this.playMove(nboard, norientation, nj); // 第二次变换
             if (!nlast_move.game_over) {
-              // nboard 新世界
-              weight = 1;
-              if (nlast_move.landing_height < 15) { // 贪婪
-                if (last_move.rows_removed == 0 && nlast_move.rows_removed == 0) {
-                  weight = 1;
-                } else {
-                  weight = last_move.rows_removed * last_move.rows_removed + nlast_move.rows_removed * nlast_move.rows_removed;
-                }
-                evaluation = this.evaluateBoard_EL2(nlast_move, nboard, weight);
-              } else { // 保守
-                evaluation = this.evaluateBoard_EL2(nlast_move, nboard, weight);
-              }
+              evaluation = this.evaluateBoard_EL(nlast_move, nboard, weight);
               if (evaluation > best_evaluation) {
                 best_evaluation = evaluation;
                 best_orientation = i;
@@ -184,7 +173,7 @@ ElTetris.prototype.evaluateBoard_PD = function(last_move, board) {
 };
 ElTetris.prototype.evaluateBoard_EL = function(last_move, board) {
   return f.GetLandingHeight(last_move, board) * -4.500158825082766 +
-    last_move.rows_removed * 3.4181268101392694 +
+    
     f.GetRowTransitions(board, this.number_of_columns) * -3.2178882868487753 +
     f.GetColumnTransitions(board, this.number_of_columns) * -9.348695305445199 +
     f.GetNumberOfHoles(board, this.number_of_columns) * -7.899265427351652 +
@@ -214,7 +203,7 @@ ElTetris.prototype.playMove = function(board, piece, column) {
   var placementRow = this.getPlacementRow(board, piece);
   var rowsRemoved = 0;
 
-  if (placementRow + piece.length > this.number_of_rows) {
+  if (placementRow + piece.length >= this.number_of_rows) {
     // Game over.
     return { 'game_over': true };
   }

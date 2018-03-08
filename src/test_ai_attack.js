@@ -1,4 +1,5 @@
-var ElTetris = require('./eltetris_next_ai'); 
+var ElTetris = require('./tetris_ai_attack'); 
+
 var PIECES = require('./pieces');
 var f = require('./features');
 // eltetris = new ElTetris(10, 20, [514, 768, 16, 3,3 , 7, 16, 3,3, 7, 16, 3 ,3, 7, 16, 3, 0, 0, 0, 0]);
