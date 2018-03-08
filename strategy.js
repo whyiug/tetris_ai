@@ -49,7 +49,8 @@ function ElTetris(number_of_columns, number_of_rows, board) {
   this.FULLROW = Math.pow(2, number_of_columns) - 1;
 }
 
-ElTetris.prototype.play = function(current_piece_index, next_piece_index) {
+ElTetris.prototype.play = function(current_piece_index) {
+  var next_piece_index = this.getRandomPieceIndex();
   current_piece = PIECES[current_piece_index];
   next_piece = PIECES[next_piece_index];
   //console.log(piece);
@@ -72,7 +73,6 @@ ElTetris.prototype.play = function(current_piece_index, next_piece_index) {
   //  console.log(move);
   move.rows_removed = last_move.rows_removed;
   move.next_piece_index = next_piece_index;
-  move.board = this.board;
   return move;
   last_move.next_piece_index = next_piece_index;
   // return move;

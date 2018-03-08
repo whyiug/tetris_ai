@@ -28,11 +28,13 @@
      */
      PrintBoard: function(board, num_columns) {
       for (var i = board.length -1; i >= 0 ; i--) {
+        //console.log(board);
         var str = '0000000000' + board[i].toString(2);
-        var str2 = str.substring(str.length - 10, str.length);
-        console.log(str2.split("").reverse().join(" "));
+        var str2 = str.substring(str.length - num_columns, str.length);
+        var res = str2.split("").reverse().join(" ");
+        console.log(res);
       }
-      return;
+      return res;
     },
   /**
      * get the height of board
@@ -42,9 +44,38 @@
       for (var i = board.length -1; i >= 0 ; i--) {
         if (board[i] !=0 ) {
           height = i + 1;
+          break;
         }
       }
       return height;
+    },
+  /**
+     * get the fullrows of board
+     */
+     GetBoardFullRows: function(board, num_columns) {
+       var FULLROW = Math.pow(2, num_columns) - 1;
+       var count = 0;
+      for (var i = board.length -1; i >= 0 ; i--) {
+        if (board[i] ==  FULLROW) {
+          count ++;
+        }
+      }
+      return count;
+    },
+  /**
+     * get the height of board
+     */
+     GetLeftBoard: function(board, num_columns) {
+      var aboard = board.slice();
+      for (var i = board.length -1; i >= 0 ; i--) {
+        //console.log(board);
+        var str = '0000000000' + board[i].toString(2);
+        var str2 = str.substring(str.length - num_columns, str.length);
+        var res = str2.split("").reverse().join("");
+        res = res.substring(0, res.length - 1);
+        aboard[i] = parseInt(res.split("").reverse().join(""), 2);
+      }
+       return aboard;
     },
   /**
      * Print the current piece
