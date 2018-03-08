@@ -6,14 +6,18 @@ var PORT = 12345; //定义端口号
 //创建一个TCP客户端实例
 var client = net.connect(PORT, HOST, function() {
     console.log('Connected to the server.');
-<<<<<<< HEAD
     client.write('el2_greed\r\n');
-=======
-    client.write('el2\r\n');
->>>>>>> ai
 });
 
 var rows = 0;
+var row0 = 0;
+var row1 = 0;
+var row2 = 0;
+var row3 = 0;
+var row4 = 0;
+var score = 0;
+var counter = 0;
+var piece = 1;
 //监听数据传输事件
 client.on('data', function(data) {
     var input = data.toString();
@@ -29,11 +33,30 @@ client.on('data', function(data) {
     var ElTetris = require('./eltetris');
     eltetris = new ElTetris(10, 20, board_1);
     var move = eltetris.play(current_piece_index, next_piece_index);
-    rows += eltetris.rows_completed;
     var rsp = '1' + move.index + move.column + '00\r\n';
-//    console.log(move);
-//    console.log(rsp);
-//    console.log(rows);
+    counter ++;
+    if (counter == 1000000) {
+        console.log(score);
+        process.exit();
+    }
+    switch (move.rows_removed) {
+        case 0: 
+        row0 ++;
+        break;
+        case 1: 
+        row1 ++;
+        break;
+        case 2: 
+        row2 ++;
+        break;
+        case 3: 
+        row3 ++;
+        break;
+        case 4: 
+        row4 ++;
+        break;
+    }
+    score = 4*row1 + 10*row2 + 30 * row3 + 120 * row4;
     client.write(rsp);
 });
 

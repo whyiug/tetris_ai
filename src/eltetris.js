@@ -62,7 +62,8 @@ ElTetris.prototype.play = function(piece, next_piece) {
   //  console.log(piece);
   //  console.log(this.rows_completed);
   //  console.log(move);
-  // return move;
+  move.rows_removed = last_move.rows_removed;
+  return move;
 
   last_move.next_piece_index = next_piece_index;
   return last_move;
@@ -101,7 +102,6 @@ ElTetris.prototype.pickMove = function(piece, next_piece) {
       // Copy current board
       var board = this.board.slice(); // board 原来看板
       var last_move = this.playMove(board, orientation, j); // board 第一次变换后的新看板
-
       if (!last_move.game_over) {
         for (var ni in next_piece) {
           var norientation = next_piece[ni].orientation;
