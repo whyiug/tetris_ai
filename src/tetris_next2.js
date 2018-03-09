@@ -122,7 +122,7 @@ ElTetris.prototype.pickMove = function(piece, next_piece) {
             if (!nlast_move.game_over) {
               // nboard 新世界
               weight = 1;
-              if (nlast_move.landing_height < 15) { // 贪婪
+              if (nlast_move.landing_height < 17) { // 贪婪
                 if (last_move.rows_removed == 0 && nlast_move.rows_removed == 0) {
                   weight = 1;
                 } else {

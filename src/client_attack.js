@@ -10,7 +10,7 @@ var PORT = 12345; //定义端口号
 //创建一个TCP客户端实例
 var client = net.connect(PORT, HOST, function() {
   console.log('Connected to the server.');
-  client.write('wahaha\r\n'); });
+  client.write('tourist\r\n'); });
 
 var rows = 0;
 //监听数据传输事件
