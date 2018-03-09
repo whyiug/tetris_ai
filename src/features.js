@@ -27,6 +27,7 @@
      * Print the current board
      */
      PrintBoard: function(board, num_columns) {
+       retrun;
       for (var i = board.length -1; i >= 0 ; i--) {
         //console.log(board);
         var str = '0000000000' + board[i].toString(2);

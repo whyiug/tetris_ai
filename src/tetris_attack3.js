@@ -25,10 +25,10 @@
  *  number_of_columns - Number of columns in the tetris game.
  *  number_of_rows - Number of rows in the tetris game.
  */
- var f = require('./features');
- var PIECES = require('./pieces');
+var f = require('./features');
+var PIECES = require('./pieces');
 
- function ElTetris(number_of_columns, number_of_rows, board) {
+function ElTetris(number_of_columns, number_of_rows, board) {
   this.number_of_rows = number_of_rows;
   this.number_of_columns = number_of_columns;
   this.rows_completed = 0;
@@ -43,6 +43,9 @@
       this.board[i] = 0;
     }
   } 
+  console.log('-----初始布局-------');
+  f.PrintBoard(this.board, this.number_of_columns);
+  console.log('------------');
   this.FULLROW = Math.pow(2, number_of_columns) - 1;
 }
 
@@ -54,6 +57,12 @@ ElTetris.prototype.play = function(current_piece_index, next_piece_index) {
   // console.log(move);
   // f.PrintBestMove(move);
   var last_move = this.playMove(this.board, move.orientation, move.column);
+  console.log('-----下落方块-------');
+  f.PrintBoard(last_move.piece, this.number_of_columns);
+  console.log('------------');
+  console.log('-----当前布局-------');
+  f.PrintBoard(this.board, this.number_of_columns);
+  console.log('------------');
   if (!last_move.game_over) {
     this.rows_completed += last_move.rows_removed;
   }
@@ -88,7 +97,7 @@ ElTetris.prototype.play = function(current_piece_index, next_piece_index) {
  */
 
 
- ElTetris.prototype.pickMove = function(piece, next_piece) {
+ElTetris.prototype.pickMove = function(piece, next_piece) {
   var best_evaluation = -100000;
   var best_orientation = 0;
   var best_column = 0;
@@ -105,12 +114,22 @@ ElTetris.prototype.play = function(current_piece_index, next_piece_index) {
       var board = this.board.slice(); // board 原来看板
       var last_move = this.playMove(board, orientation, j); // board 第一次变换后的新看板
       if (!last_move.game_over) {
-        evaluation = this.evaluateBoard_PD(last_move, board);
-        if (evaluation > best_evaluation) {
-          best_evaluation = evaluation;
-          best_orientation = i;
-          best_column = j;
-          best_rows_removed = last_move.rows_removed;
+        for (var ni in next_piece) {
+          var norientation = next_piece[ni].orientation;
+          for (var nj = 0; nj < this.number_of_columns - next_piece[ni].width + 1; nj++) {
+            var nboard = board.slice(); // 复制第一次变换后的新看板
+            var nlast_move = this.playMove(nboard, norientation, nj); // 第二次变换
+            if (!nlast_move.game_over) {
+              // nboard 新世界              
+              evaluation = this.evaluateBoard_EL(nlast_move, nboard);
+              if (evaluation > best_evaluation) {
+                best_evaluation = evaluation;
+                best_orientation = i;
+                best_column = j;
+                best_rows_removed = last_move.rows_removed;
+              }
+            }
+          }
         }
 
       }
@@ -121,7 +140,7 @@ ElTetris.prototype.play = function(current_piece_index, next_piece_index) {
     'orientation': piece[best_orientation].orientation,
     'index': piece[best_orientation].index,
     'column': best_column,
-    'rows_removed': best_rows_removed,
+    'rows_removed': best_rows_removed
   };
 };
 /**
@@ -138,28 +157,29 @@ ElTetris.prototype.play = function(current_piece_index, next_piece_index) {
  *   A number indicating how "good" a board is, the higher the number, the
  *   better the board.
  */
- ElTetris.prototype.evaluateBoard_PD = function(last_move, board) {
+ElTetris.prototype.evaluateBoard_PD = function(last_move, board) {
   return f.GetLandingHeight(last_move, board) * -1 +
-  last_move.rows_removed * 1 +
-  f.GetRowTransitions(board, this.number_of_columns) * -1 +
-  f.GetColumnTransitions(board, this.number_of_columns) * -1 +
-  f.GetNumberOfHoles(board, this.number_of_columns) * -1 +
-  f.GetWellSums(board, this.number_of_columns) * -1;
+    last_move.rows_removed * 1 +
+    f.GetRowTransitions(board, this.number_of_columns) * -1 +
+    f.GetColumnTransitions(board, this.number_of_columns) * -1 +
+    f.GetNumberOfHoles(board, this.number_of_columns) * -1 +
+    f.GetWellSums(board, this.number_of_columns) * -1;
 };
 ElTetris.prototype.evaluateBoard_EL = function(last_move, board) {
   return f.GetLandingHeight(last_move, board) * -4.500158825082766 +
-  f.GetRowTransitions(board, this.number_of_columns) * -3.2178882868487753 +
-  f.GetColumnTransitions(board, this.number_of_columns) * -9.348695305445199 +
-  f.GetNumberOfHoles(board, this.number_of_columns) * -14.899265427351652 +
-  f.GetWellSums(board, this.number_of_columns) * -6.3855972247263626;
+    last_move.rows_removed * 3.4181268101392694 +
+    f.GetRowTransitions(board, this.number_of_columns) * -3.2178882868487753 +
+    f.GetColumnTransitions(board, this.number_of_columns) * -9.348695305445199 +
+    f.GetNumberOfHoles(board, this.number_of_columns) * -7.899265427351652 +
+    f.GetWellSums(board, this.number_of_columns) * -3.3855972247263626;
 };
 ElTetris.prototype.evaluateBoard_EL2 = function(last_move, board, weight) {
   return f.GetLandingHeight(last_move, board) * -4.500158825082766 +
-  last_move.rows_removed * 3.4181268101392694 * weight +
-  f.GetRowTransitions(board, this.number_of_columns) * -3.2178882868487753 +
-  f.GetColumnTransitions(board, this.number_of_columns) * -9.348695305445199 +
-  f.GetNumberOfHoles(board, this.number_of_columns) * -7.899265427351652 +
-  f.GetWellSums(board, this.number_of_columns) * -3.3855972247263626;
+    last_move.rows_removed * 3.4181268101392694 * weight +
+    f.GetRowTransitions(board, this.number_of_columns) * -3.2178882868487753 +
+    f.GetColumnTransitions(board, this.number_of_columns) * -9.348695305445199 +
+    f.GetNumberOfHoles(board, this.number_of_columns) * -7.899265427351652 +
+    f.GetWellSums(board, this.number_of_columns) * -3.3855972247263626;
 };
 /**
  * Play the given piece at the specified location.
@@ -172,7 +192,7 @@ ElTetris.prototype.evaluateBoard_EL2 = function(last_move, board, weight) {
  * Returns:
  *   True if play succeeded, False if game is over.
  */
- ElTetris.prototype.playMove = function(board, piece, column) {
+ElTetris.prototype.playMove = function(board, piece, column) {
   piece = this.movePiece(piece, column);
   var placementRow = this.getPlacementRow(board, piece);
   var rowsRemoved = 0;
@@ -211,7 +231,7 @@ ElTetris.prototype.evaluateBoard_EL2 = function(last_move, board, weight) {
 /**
  * Given a piece, return the row at which it should be placed.
  */
- ElTetris.prototype.getPlacementRow = function(board, piece) {
+ElTetris.prototype.getPlacementRow = function(board, piece) {
   // Descend from top to find the highest row that will collide
   // with the our piece.
   for (var row = this.number_of_rows - piece.length; row >= 0; row--) {
