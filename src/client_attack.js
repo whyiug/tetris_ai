@@ -3,8 +3,8 @@ var f = require('./features');
 var ElTetris = require('./tetris_attack');
 var ElTetris2 = require('./tetris_attack2');
 var net = require('net'); //引入网络模块
-var HOST = '192.168.0.141'; //定义服务器地址
-//var HOST = '192.168.0.201'; //定义服务器地址
+// var HOST = '192.168.0.141'; //定义服务器地址
+var HOST = '192.168.0.201'; //定义服务器地址
 var PORT = 12345; //定义端口号
 
 //创建一个TCP客户端实例
