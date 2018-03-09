@@ -40,7 +40,7 @@
      * get the height of board
      */
      GetBoardHeight: function(board) {
-      var height = board.lengh;
+      var height = 0;
       for (var i = board.length -1; i >= 0 ; i--) {
         if (board[i] !=0 ) {
           height = i + 1;

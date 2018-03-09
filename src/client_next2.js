@@ -25,7 +25,7 @@ client.on('data', function(data) {
     var ElTetris = require('./tetris_next2');
     eltetris = new ElTetris(10, 20, board_1);
     var move = eltetris.play(current_piece_index, next_piece_index);
-    rows += eltetris.rows_completed;
+    // rows += eltetris.rows_completed;
     var rsp = '1' + move.index + move.column + '00\r\n';
 //    console.log(move);
 //    console.log(rsp);

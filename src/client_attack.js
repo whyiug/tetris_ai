@@ -25,7 +25,6 @@ client.on('data', function(data) {
     var reg = /\d{10}/g;
     var board_1 = formatParams(board_str1);
     var board_2 = formatParams(board_str2);
-
     // eltetris = new ElTetris(10, 20, board_1);
     var move = strategy(board_1, current_piece_index, next_piece_index);
     // rows += eltetris.rows_completed;
@@ -59,14 +58,15 @@ function strategy (board, current_piece_index, next_piece_index)
   // var l_board = f.GetLeftBoard(board, 10);
   // var l_fullrow = f.GetBoardFullRows(l_board, 9);
   var move1 = attempt_tetris.play(current_piece_index, next_piece_index);
-  if (height > 8) {
+  // return move1;
+  if (height > 6) {
     return move1;
   } else {
     var left_board = f.GetLeftBoard(board, 10);
     var left_tetris = new ElTetris2(9, 20, left_board);
     var move2 = left_tetris.play(current_piece_index, next_piece_index);
     // if ((move.rows_removed < 2 && move.nrows_removed < 2) || (move.rows_removed < l_fullrow && move.nrows_removed < l_fullrow)) {
-    if (height > 5) {
+    if (height > 3) {
       if (move1.rows_removed < 2 && move1.nrows_removed < 2) {
         // 堆左边的9个
         return move2;
