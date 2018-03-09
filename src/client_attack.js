@@ -66,7 +66,7 @@ function strategy (board, current_piece_index, next_piece_index)
     var left_tetris = new ElTetris2(9, 20, left_board);
     var move2 = left_tetris.play(current_piece_index, next_piece_index);
     // if ((move.rows_removed < 2 && move.nrows_removed < 2) || (move.rows_removed < l_fullrow && move.nrows_removed < l_fullrow)) {
-    if (height > 1) {
+    if (height > 5) {
       if (move1.rows_removed < 2 && move1.nrows_removed < 2) {
         // 堆左边的9个
         return move2;

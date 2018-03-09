@@ -43,9 +43,6 @@ function ElTetris(number_of_columns, number_of_rows, board) {
       this.board[i] = 0;
     }
   } 
-  console.log('-----初始布局-------');
-  f.PrintBoard(this.board, this.number_of_columns);
-  console.log('------------');
   this.FULLROW = Math.pow(2, number_of_columns) - 1;
 }
 
@@ -57,12 +54,6 @@ ElTetris.prototype.play = function(current_piece_index, next_piece_index) {
   // console.log(move);
   // f.PrintBestMove(move);
   var last_move = this.playMove(this.board, move.orientation, move.column);
-  console.log('-----下落方块-------');
-  f.PrintBoard(last_move.piece, this.number_of_columns);
-  console.log('------------');
-  console.log('-----当前布局-------');
-  f.PrintBoard(this.board, this.number_of_columns);
-  console.log('------------');
   if (!last_move.game_over) {
     this.rows_completed += last_move.rows_removed;
   }
@@ -173,11 +164,10 @@ ElTetris.prototype.evaluateBoard_PD = function(last_move, board) {
 };
 ElTetris.prototype.evaluateBoard_EL = function(last_move, board) {
   return f.GetLandingHeight(last_move, board) * -4.500158825082766 +
-    
     f.GetRowTransitions(board, this.number_of_columns) * -3.2178882868487753 +
     f.GetColumnTransitions(board, this.number_of_columns) * -9.348695305445199 +
-    f.GetNumberOfHoles(board, this.number_of_columns) * -7.899265427351652 +
-    f.GetWellSums(board, this.number_of_columns) * -3.3855972247263626;
+    f.GetNumberOfHoles(board, this.number_of_columns) * -14.899265427351652 +
+    f.GetWellSums(board, this.number_of_columns) * -6.3855972247263626;
 };
 ElTetris.prototype.evaluateBoard_EL2 = function(last_move, board, weight) {
   return f.GetLandingHeight(last_move, board) * -4.500158825082766 +
