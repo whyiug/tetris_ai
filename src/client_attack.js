@@ -2,7 +2,6 @@ var PIECES = require('./pieces');
 var f = require('./features');
 var ElTetris = require('./tetris_attack');
 var ElTetris2 = require('./tetris_attack2');
-var ElTetris3 = require('./tetris_attact3');
 var net = require('net'); //引入网络模块
 var HOST = '192.168.0.141'; //定义服务器地址
 //var HOST = '192.168.0.201'; //定义服务器地址
@@ -59,21 +58,14 @@ function strategy (board, current_piece_index, next_piece_index)
   // var l_fullrow = f.GetBoardFullRows(l_board, 9);
   var move1 = attempt_tetris.play(current_piece_index, next_piece_index);
   // return move1;
-  if (height > 15) {
-    var attempt_tetris = new ElTetris3(10, 20, aboard);
-    // var l_board = f.GetLeftBoard(board, 10);
-    // var l_fullrow = f.GetBoardFullRows(l_board, 9);
-    var move3 = attempt_tetris.play(current_piece_index, next_piece_index);
-    return move3;
-  }
-  if (height > 6) {
+  if (height > 7) {
     return move1;
   } else {
     var left_board = f.GetLeftBoard(board, 10);
     var left_tetris = new ElTetris2(9, 20, left_board);
     var move2 = left_tetris.play(current_piece_index, next_piece_index);
     // if ((move.rows_removed < 2 && move.nrows_removed < 2) || (move.rows_removed < l_fullrow && move.nrows_removed < l_fullrow)) {
-    if (height > 3) {
+    if (height > 4) {
       if (move1.rows_removed < 2 && move1.nrows_removed < 2) {
         // 堆左边的9个
         return move2;
