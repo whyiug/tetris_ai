@@ -105,7 +105,7 @@ ElTetris.prototype.play = function(current_piece_index, next_piece_index) {
       var board = this.board.slice(); // board 原来看板
       var last_move = this.playMove(board, orientation, j); // board 第一次变换后的新看板
       if (!last_move.game_over) {
-        evaluation = this.evaluateBoard_PD(last_move, board);
+        evaluation = this.evaluateBoard_EL(last_move, board);
         if (evaluation > best_evaluation) {
           best_evaluation = evaluation;
           best_orientation = i;
@@ -148,10 +148,11 @@ ElTetris.prototype.play = function(current_piece_index, next_piece_index) {
 };
 ElTetris.prototype.evaluateBoard_EL = function(last_move, board) {
   return f.GetLandingHeight(last_move, board) * -4.500158825082766 +
+  last_move.rows_removed * 3.4181268101392694 * weight +
   f.GetRowTransitions(board, this.number_of_columns) * -3.2178882868487753 +
   f.GetColumnTransitions(board, this.number_of_columns) * -9.348695305445199 +
-  f.GetNumberOfHoles(board, this.number_of_columns) * -14.899265427351652 +
-  f.GetWellSums(board, this.number_of_columns) * -6.3855972247263626;
+  f.GetNumberOfHoles(board, this.number_of_columns) * -4.899265427351652 +
+  f.GetWellSums(board, this.number_of_columns) * -3.3855972247263626;
 };
 ElTetris.prototype.evaluateBoard_EL2 = function(last_move, board, weight) {
   return f.GetLandingHeight(last_move, board) * -4.500158825082766 +
